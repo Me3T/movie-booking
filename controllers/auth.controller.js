@@ -1,0 +1,72 @@
+const AppError = require("../errors/app.error");
+const User = require("../models/user.model");
+
+const {
+  userSignupValidationSchema,
+  userSigninValidationSchema,
+} = require("../lib/validators/auth.validators");
+const AuthService = require("../services/auth.service");
+
+async function handleSignup(req, res) {
+  const validationResult = await userSignupValidationSchema.safeParseAsync(
+    req.body
+  );
+
+  if (validationResult.error)
+    return res.status(400).json({ error: validationResult.error });
+
+  const { firstName, lastName, email, password } = validationResult.data;
+    //signUpwithEmailAndPassword
+  try {
+    const token = await AuthService.signUpwithEmailAndPassword({
+      firstName,
+      lastName,
+      email,
+      password,
+    });
+    return res.status(201).json({ status: "success", data: { token } });
+  } catch (error) {
+    if (error instanceof AppError)
+      return res.status(err.code).json({ status: "error", error: err.message });
+
+    console.log(`Error signing in user`, error);
+
+    return res
+      .status(500)
+      .json({ status: "error", message: "Internal server error" });
+  }
+}
+
+async function handleSignin(req, res) {
+  const validationResult = await userSigninValidationSchema.safeParseAsync(
+    req.body
+  );
+
+  if (validationResult.error)
+    return res.status(400).json({ error: validationResult.error });
+
+  const { email, password } = validationResult.data;
+
+  try {
+    const token = await AuthService.signInWithEmailAndPassword({
+      email,
+      password,
+    });
+
+    return res.status(201).json({ status: "success", data: { token } });
+  } catch (error) {
+    if (error instanceof AppError)
+      return res.status(err.code).json({ status: "error", error: err.message });
+
+    console.log(`Error signing in user`, error);
+
+    return res
+      .status(500)
+      .json({ status: "error", message: "Internal server error" });
+  }
+}
+
+module.exports = {
+  handleSignup,
+  handleSignin,
+};
