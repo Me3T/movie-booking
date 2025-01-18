@@ -75,6 +75,21 @@ class AuthService {
     });
     return token;
   }
+
+  /**
+   *
+   * @param {string} token
+   * @returns {{_id:string; role:'admin'|'user'}} payload
+   */
+
+  static decodeUserToken(token) {
+    try {
+      const payload = JWT.verify(token, JWT_SECRET);
+      return payload;
+    } catch (err) {
+      return false;
+    }
+  }
 }
 
 module.exports = AuthService;

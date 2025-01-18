@@ -16,7 +16,7 @@ async function handleSignup(req, res) {
     return res.status(400).json({ error: validationResult.error });
 
   const { firstName, lastName, email, password } = validationResult.data;
-    //signUpwithEmailAndPassword
+  //signUpwithEmailAndPassword
   try {
     const token = await AuthService.signUpwithEmailAndPassword({
       firstName,
@@ -66,7 +66,13 @@ async function handleSignin(req, res) {
   }
 }
 
+async function handleMe(req, res) {
+  if (!req.user) return res.json({ isLoggedin: false });
+  return res.json({ isLoggedin: true, data: { user: req.user } });
+}
+
 module.exports = {
   handleSignup,
   handleSignin,
+  handleMe,
 };
