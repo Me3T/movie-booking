@@ -27,7 +27,9 @@ async function handleSignup(req, res) {
     return res.status(201).json({ status: "success", data: { token } });
   } catch (error) {
     if (error instanceof AppError)
-      return res.status(err.code).json({ status: "error", error: err.message });
+      return res
+        .status(error.code)
+        .json({ status: "error", error: error.message });
 
     console.log(`Error signing in user`, error);
 
@@ -56,7 +58,9 @@ async function handleSignin(req, res) {
     return res.status(201).json({ status: "success", data: { token } });
   } catch (error) {
     if (error instanceof AppError)
-      return res.status(err.code).json({ status: "error", error: err.message });
+      return res
+        .status(error.code)
+        .json({ status: "error", error: error.message });
 
     console.log(`Error signing in user`, error);
 

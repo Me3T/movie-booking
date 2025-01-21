@@ -1,4 +1,4 @@
-const { Schema } = require("mongoose");
+const { Schema, model } = require("mongoose");
 
 const theatreSchema = new Schema(
   {
@@ -11,7 +11,7 @@ const theatreSchema = new Schema(
       required: true,
     },
     street: {
-      type: Number,
+      type: String,
       required: true,
     },
     city: {
