@@ -13,11 +13,11 @@ const theatreHallMovieMappingSchema = new Schema(
       ref: "theatreHall",
       required: true,
     },
-    startTimeStamp: {
+    startTimestamp: {
       type: Number,
       required: true,
     },
-    endTimeStamp: {
+    endTimestamp: {
       type: Number,
       required: true,
     },

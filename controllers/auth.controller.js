@@ -70,9 +70,22 @@ async function handleSignin(req, res) {
   }
 }
 
+// async function handleMe(req, res) {
+//   if (!req.user) return res.json({ isLoggedin: false });
+//   return res.json({ isLoggedin: true, data: { user: req.user } });
+
+// }
 async function handleMe(req, res) {
-  if (!req.user) return res.json({ isLoggedin: false });
-  return res.json({ isLoggedin: true, data: { user: req.user } });
+  if (!req.user) return res.json({ isLoggedIn: false });
+
+  const user = await User.findById(req.user._id).select({
+    firstName: true,
+    lastName: true,
+    email: true,
+    role: true,
+  });
+
+  return res.json({ isLoggedIn: true, data: { user } });
 }
 
 module.exports = {
