@@ -22,11 +22,10 @@ router.post("/theatres/halls", theatreController.createTheatreHall);
 
 //Theatre Hall movie mapping
 
-router.get("/shows/:movieId", theatreController.listShowsByMovieId);
 router.post("/shows", theatreController.createShow);
 
 // Movies
-router.get("/movies", movieController.getAllMovies);
+
 router.get("/movies/:id", movieController.getMovieById);
 router.post("/movies/", movieController.createMovie);
 router.patch("/movies/:id");

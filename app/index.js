@@ -2,8 +2,9 @@ const express = require("express");
 const cors = require("cors");
 
 const adminRoutes = require("../routes/admin.routes");
-const userRoutes = require("../routes/user.routes");
+const bookingRoutes = require("../routes/booking.routes");
 const authRoutes = require("../routes/auth.routes");
+const publicRoutes = require("../routes/public.routes");
 
 const { authenticationMiddleware } = require("../middlewares/auth.middleware");
 
@@ -19,6 +20,6 @@ app.get("/", (req, res) =>
 
 app.use("/admin", adminRoutes);
 app.use("/auth", authRoutes);
-app.use("/user", userRoutes);
-
+app.use("/booking", bookingRoutes);
+app.use("/api", publicRoutes);
 module.exports = app;

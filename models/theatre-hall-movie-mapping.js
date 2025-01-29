@@ -1,12 +1,11 @@
 const { Schema, model } = require("mongoose");
-const { endianness } = require("node:os");
 
 const theatreHallMovieMappingSchema = new Schema(
   {
     movieId: {
       type: Schema.Types.ObjectId,
-      ref: "movie",
       required: true,
+      ref: "movie",
     },
     theatreHallId: {
       type: Schema.Types.ObjectId,
@@ -30,7 +29,7 @@ const theatreHallMovieMappingSchema = new Schema(
 );
 
 theatreHallMovieMappingSchema.index(
-  { movieId: 1, theatreHallId: 1, startTimeStamp: 1, endTimeStamp: 1 },
+  { movieId: 1, theatreHallId: 1, startTimestamp: 1, endTimestamp: 1 },
   { unique: true }
 );
 

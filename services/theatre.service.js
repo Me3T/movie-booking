@@ -44,7 +44,10 @@ class TheatreService {
   }
 
   static getShowsByMovieId(movieId) {
-    return TheatreHallMovieMapping.find({ movieId });
+    return TheatreHallMovieMapping.find({ movieId }).populate({
+      path: "theatreHallId",
+      populate: [{ path: "theatreId" }],
+    });
   }
 }
 

@@ -1,14 +1,23 @@
-const { Schema, model } = require("zod");
+const { Schema, model } = require("mongoose");
 
 const bookingSchema = new Schema(
   {
     showId: {
       type: Schema.Types.ObjectId,
-      ref: "theatreHallMovieMapping",
       required: true,
+      ref: "theatreHallMovieMapping",
     },
     seatNumber: {
       type: Number,
+      required: true,
+    },
+    paymentId: {
+      type: String,
+      required: true,
+    },
+    gateway: {
+      enum: ["STRIPE", "RAZORPAY"],
+      type: String,
       required: true,
     },
     userId: {
@@ -16,12 +25,13 @@ const bookingSchema = new Schema(
       ref: "user",
       required: true,
     },
-    status: "IN_PROGRESS | DONE",
   },
   { timestamps: true }
 );
 
 bookingSchema.index({ showId: 1, seatNumber: 1 }, { unique: true });
+
+bookingSchema.index({ gateway: 1, paymentId: 1 }, { unique: true });
 
 const Booking = model("booking", bookingSchema);
 
